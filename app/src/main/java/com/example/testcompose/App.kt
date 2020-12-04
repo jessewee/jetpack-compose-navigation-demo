@@ -38,7 +38,7 @@ fun Pages(currentDestination: Destination) {
     }
 }
 
-@Preview(showBackground = true)
+@Preview
 @Composable
 fun AppPreview() {
     App(OnBackPressedDispatcher())
