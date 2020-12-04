@@ -13,6 +13,7 @@ sealed class Destination {
     @Immutable
     data class Second(val bottom: Int) : Destination()
 
+    /** 路径到页面的映射 */
     @Composable
     fun Page() {
         when (val d = remember { this }) {

@@ -6,15 +6,15 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 
-/** 页面导航 */
+/** 页面导航器 */
 @Suppress("unused")
 class Navigator(initialDestination: Destination, private val backPressedDispatcher: OnBackPressedDispatcher) {
-    private val _destinations = mutableStateListOf(initialDestination)
-    private val _currentDestination = mutableStateOf(initialDestination)
-    val destinations: List<Destination> = _destinations
-    val currentDestination: State<Destination> = _currentDestination
-    private val canGoBack: Boolean get() = _destinations.size > 1
-    private val backPressedCallback = object : OnBackPressedCallback(canGoBack) {
+    private val _destinations = mutableStateListOf(initialDestination) // 页面栈
+    val destinations: List<Destination> = _destinations // 页面栈
+    private val _currentDestination = mutableStateOf(initialDestination) // 当前页面
+    val currentDestination: State<Destination> = _currentDestination // 当前页面
+    private val canGoBack: Boolean get() = _destinations.size > 1 // 判断返回键是否调用pop
+    private val backPressedCallback = object : OnBackPressedCallback(canGoBack) { // 返回键事件处理
         override fun handleOnBackPressed() = pop()
     }.also { backPressedDispatcher.addCallback(it) }
 

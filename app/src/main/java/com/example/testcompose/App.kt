@@ -13,10 +13,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.ui.tooling.preview.Preview
 import com.example.testcompose.ui.AppComposeTheme
 
-
 private lateinit var mNavigator: Navigator
 val navigator: Navigator get() = mNavigator
 
+/** App入口 */
 @Composable
 fun App(backDispatcher: OnBackPressedDispatcher) {
     mNavigator = remember { Navigator(Destination.Launcher, backDispatcher) }
@@ -26,11 +26,14 @@ fun App(backDispatcher: OnBackPressedDispatcher) {
 @Composable
 fun Pages(currentDestination: Destination) {
     Box(modifier = Modifier.background(color = Color.White).fillMaxSize()) {
+        // 底层的页面
         if (navigator.destinations.size > 1) {
             navigator.destinations.subList(0, navigator.destinations.size - 1)
             for (i in 0 until navigator.destinations.size - 1) navigator.destinations[i].Page()
         }
+        // 全屏Box，用来遮挡底层页面，屏蔽底层页面的点击
         Box(modifier = Modifier.background(color = Color.White).fillMaxSize().tapGestureFilter { })
+        // 当前页
         Crossfade(currentDestination) { currentDestination.Page() }
     }
 }
